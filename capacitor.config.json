@@ -1,6 +1,6 @@
 {
   "appId": "com.empresa.meuapp",
-  "appName": "Meu App",
+  "appName": "Tcc-Pro-v2",
   "webDir": "www",
   "bundledWebRuntime": false,
   "plugins": {
