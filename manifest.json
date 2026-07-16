@@ -1,6 +1,6 @@
 {
-  "name": "Meu App",
-  "short_name": "Meu App",
+  "name": "Tcc-Pro-v2",
+  "short_name": "Tcc-Pro-v2",
   "start_url": ".",
   "display": "standalone",
   "background_color": "#08080c",
