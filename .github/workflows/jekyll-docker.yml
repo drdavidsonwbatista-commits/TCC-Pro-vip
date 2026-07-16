@@ -1,8 +1,0 @@
-unzip meu-app-android-project.zip
-cd meu-app-android-project
-git init
-git add .
-git commit -m "primeiro app"
-git branch -M main
-git remote add origin https://github.com/SEUUSER/meu-app-apk.git
-git push -u origin main
