@@ -1,0 +1,11 @@
+{
+  "appId": "com.empresa.meuapp",
+  "appName": "Meu App",
+  "webDir": "www",
+  "bundledWebRuntime": false,
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 3000
+    }
+  }
+}

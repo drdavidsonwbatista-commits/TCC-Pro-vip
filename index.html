@@ -1,0 +1,2264 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+:root {
+  --bg: #f8fafc;
+  --bg-secondary: #f1f5f9;
+  --card: #ffffff;
+  --text: #1e293b;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+  --primary: #0ea5e9;
+  --primary-dark: #0284c7;
+  --primary-light: #7dd3fc;
+  --accent: #10b981;
+  --accent-dark: #059669;
+  --accent-light: #6ee7b7;
+  --danger: #ef4444;
+  --warning: #f59e0b;
+  --border: #e2e8f0;
+  --shadow: rgba(15, 23, 42, 0.08);
+  --shadow-lg: rgba(15, 23, 42, 0.12);
+}
+
+.dark {
+  --bg: #0f172a;
+  --bg-secondary: #1e293b;
+  --card: #1e293b;
+  --text: #f1f5f9;
+  --text-muted: #94a3b8;
+  --text-light: #64748b;
+  --primary: #38bdf8;
+  --primary-dark: #0ea5e9;
+  --primary-light: #0c4a6e;
+  --accent: #34d399;
+  --accent-dark: #10b981;
+  --accent-light: #064e3b;
+  --danger: #f87171;
+  --warning: #fbbf24;
+  --border: #334155;
+  --shadow: rgba(0, 0, 0, 0.3);
+  --shadow-lg: rgba(0, 0, 0, 0.4);
+}
+
+* { 
+  box-sizing: border-box; 
+  margin: 0; 
+  padding: 0; 
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  line-height: 1.6;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  min-height: 44px;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+input, textarea, select {
+  font-family: inherit;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  transition: all 0.2s ease;
+  min-height: 44px;
+  border-radius: 8px;
+  padding: 0.75rem;
+  width: 100%;
+}
+
+input:focus, textarea:focus, select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(14, 165, 233, 0.1);
+}
+
+textarea { min-height: 80px; resize: vertical; }
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+.card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: 0 4px 6px -1px var(--shadow), 0 2px 4px -2px var(--shadow);
+  transition: all 0.3s ease;
+  padding: 1.5rem;
+}
+
+.card:hover {
+  box-shadow: 0 10px 15px -3px var(--shadow-lg), 0 4px 6px -4px var(--shadow-lg);
+}
+
+.btn {
+  padding: 0.75rem 1.5rem;
+  font-weight: 600;
+  font-size: 0.875rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+}
+
+.btn-primary:hover {
+  filter: brightness(1.1);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(14, 165, 233, 0.4);
+}
+
+.btn-secondary {
+  background: var(--bg-secondary);
+  border: 1px solid var(--border);
+  color: var(--text);
+}
+
+.btn-secondary:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--card);
+}
+
+.btn-danger {
+  background: var(--danger);
+  color: white;
+}
+
+.btn-danger:hover {
+  filter: brightness(1.1);
+}
+
+.btn-sm {
+  padding: 0.5rem 1rem;
+  font-size: 0.75rem;
+  min-height: 36px;
+}
+
+header {
+  position: sticky;
+  top: 0;
+  z-index: 50;
+  background: var(--card);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(12px);
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 0;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.logo-icon {
+  width: 2.5rem;
+  height: 2.5rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 1.5rem;
+}
+
+.logo-text h1 {
+  font-size: 1.5rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.logo-text p {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+}
+
+.nav-wrapper {
+  margin-top: 1rem;
+  overflow-x: auto;
+}
+
+.nav {
+  display: flex;
+  gap: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+.nav-tab {
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+  background: var(--bg-secondary);
+  color: var(--text-muted);
+  min-height: 44px;
+}
+
+.nav-tab:hover {
+  color: var(--primary);
+}
+
+.nav-tab.active {
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  color: white;
+}
+
+.hamburger {
+  display: none;
+  min-height: 44px;
+  min-width: 44px;
+}
+
+.module {
+  display: none;
+}
+
+.module.active {
+  display: block;
+}
+
+.grid {
+  display: grid;
+  gap: 1.5rem;
+}
+
+.grid-2 {
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+}
+
+.grid-3 {
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+}
+
+.col-span-2 {
+  grid-column: span 2;
+}
+
+.section-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 1.25rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.section-subtitle {
+  font-size: 1.125rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.label {
+  display: block;
+  font-size: 0.875rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+  color: var(--text);
+}
+
+.slider {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 100%;
+  height: 8px;
+  border-radius: 5px;
+  background: var(--border);
+  outline: none;
+}
+
+.slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  cursor: pointer;
+  box-shadow: 0 2px 4px var(--shadow);
+}
+
+.slider::-moz-range-thumb {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+  cursor: pointer;
+  border: none;
+  box-shadow: 0 2px 4px var(--shadow);
+}
+
+.badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badge-primary {
+  background: var(--primary-light);
+  color: var(--primary-dark);
+}
+
+.badge-accent {
+  background: var(--accent-light);
+  color: var(--accent-dark);
+}
+
+.badge-danger {
+  background: #fee2e2;
+  color: #991b1b;
+}
+
+.dark .badge-danger {
+  background: #7f1d1d;
+  color: #fecaca;
+}
+
+.stat-box {
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background: var(--bg-secondary);
+  text-align: center;
+}
+
+.stat-value {
+  font-size: 2rem;
+  font-weight: 700;
+  color: var(--primary);
+}
+
+.stat-label {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
+}
+
+.mood-cell {
+  aspect-ratio: 1;
+  min-height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  border-radius: 8px;
+  background: var(--bg);
+  font-size: 1.5rem;
+}
+
+.mood-cell:hover {
+  transform: scale(1.1);
+  background: var(--border);
+}
+
+.record-item {
+  padding: 1rem;
+  border-radius: 0.75rem;
+  background: var(--bg-secondary);
+  margin-bottom: 0.75rem;
+  animation: slideDown 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.accordion {
+  border: 1px solid var(--border);
+  border-radius: 0.75rem;
+  overflow: hidden;
+}
+
+.accordion-header {
+  padding: 1rem;
+  background: var(--bg-secondary);
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.accordion-header:hover {
+  background: var(--border);
+}
+
+.accordion-content {
+  display: none;
+  padding: 1rem;
+  background: var(--card);
+}
+
+.accordion-content.open {
+  display: block;
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.table th, .table td {
+  padding: 0.75rem;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+}
+
+.table th {
+  font-weight: 600;
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  text-transform: uppercase;
+}
+
+.toast {
+  position: fixed;
+  bottom: 1.25rem;
+  right: 1.25rem;
+  z-index: 1000;
+  animation: slideDown 0.3s ease;
+  max-width: 320px;
+}
+
+.technique-card {
+  border-left: 4px solid var(--primary);
+  transition: all 0.3s ease;
+}
+
+.technique-card:hover {
+  border-left-color: var(--accent);
+  transform: translateX(4px);
+}
+
+.flex { display: flex; }
+.flex-wrap { flex-wrap: wrap; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.gap-1 { gap: 0.25rem; }
+.gap-2 { gap: 0.5rem; }
+.gap-3 { gap: 0.75rem; }
+.gap-4 { gap: 1rem; }
+.mb-1 { margin-bottom: 0.25rem; }
+.mb-2 { margin-bottom: 0.5rem; }
+.mb-3 { margin-bottom: 0.75rem; }
+.mb-4 { margin-bottom: 1rem; }
+.mb-5 { margin-bottom: 1.25rem; }
+.mt-1 { margin-top: 0.25rem; }
+.mt-2 { margin-top: 0.5rem; }
+.mt-3 { margin-top: 0.75rem; }
+.mt-4 { margin-top: 1rem; }
+.mt-6 { margin-top: 1.5rem; }
+.p-2 { padding: 0.5rem; }
+.p-3 { padding: 0.75rem; }
+.p-4 { padding: 1rem; }
+.px-3 { padding-left: 0.75rem; padding-right: 0.75rem; }
+.py-3 { padding-top: 0.75rem; padding-bottom: 0.75rem; }
+.py-6 { padding-top: 1.5rem; padding-bottom: 1.5rem; }
+.py-8 { padding-top: 2rem; padding-bottom: 2rem; }
+.text-xs { font-size: 0.75rem; }
+.text-sm { font-size: 0.875rem; }
+.text-lg { font-size: 1.125rem; }
+.text-xl { font-size: 1.25rem; }
+.text-2xl { font-size: 1.5rem; }
+.text-3xl { font-size: 1.875rem; }
+.text-5xl { font-size: 3rem; }
+.font-bold { font-weight: 700; }
+.font-semibold { font-weight: 600; }
+.text-center { text-align: center; }
+.text-right { text-align: right; }
+.italic { font-style: italic; }
+.hidden { display: none; }
+.w-full { width: 100%; }
+.overflow-x-auto { overflow-x: auto; }
+.line-clamp-2 { 
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media print {
+  header, .no-print { display: none !important; }
+  body { background: white; color: black; }
+  .card { box-shadow: none; border: 1px solid #ccc; break-inside: avoid; }
+}
+
+@media (max-width: 768px) {
+  .col-span-2 { grid-column: span 1; }
+  .grid-2, .grid-3 { grid-template-columns: 1fr; }
+  .section-title { font-size: 1.25rem; }
+  .hamburger { display: block; }
+  .nav { display: none; }
+  .nav.open { 
+    display: flex; 
+    flex-direction: column; 
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--card);
+    border-bottom: 1px solid var(--border);
+    padding: 1rem;
+    box-shadow: 0 4px 6px var(--shadow);
+  }
+  .toast {
+    left: 1.25rem;
+    right: 1.25rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .container { padding: 0 0.75rem; }
+  .card { padding: 1rem; }
+  .section-title { font-size: 1.125rem; }
+}
+</style>
+</head>
+<body>
+<div id="app">
+  <header>
+    <div class="container">
+      <div class="header-content">
+        <div class="logo">
+          <div class="logo-icon">🧠</div>
+          <div class="logo-text">
+            <h1>TCC Pro</h1>
+            <p>Ferramentas Clínicas</p>
+          </div>
+        <div class="flex gap-2 items-center">
+          <button id="printBtn" class="btn btn-secondary btn-sm no-print">🖨️ Imprimir</button>
+          <button id="exportBtn" class="btn btn-secondary btn-sm no-print">💾 Exportar</button>
+          <button id="themeToggle" class="btn btn-secondary btn-sm no-print">🌙</button>
+          <button id="hamburger" class="btn btn-secondary hamburger no-print">☰</button>
+        </div>
+      </div>
+      <div class="nav-wrapper no-print">
+        <div id="mainNav" class="nav">
+          <button class="nav-tab active" data-module="dashboard">Dashboard</button>
+          <button class="nav-tab" data-module="rpd">RPD</button>
+          <button class="nav-tab" data-module="escalas">Escalas</button>
+          <button class="nav-tab" data-module="tecnicas">Técnicas</button>
+          <button class="nav-tab" data-module="toc">TOC</button>
+          <button class="nav-tab" data-module="fobia">Fobia Social</button>
+          <button class="nav-tab" data-module="psicoeducacao">Psicoeducação</button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="container py-8">
+    
+    <!-- DASHBOARD -->
+    <div id="module-dashboard" class="module active">
+      <div class="grid grid-2 mb-6">
+        <div class="card col-span-2">
+          <h2 class="section-title">📊 Resumo da Semana</h2>
+          <div class="grid grid-3">
+            <div class="stat-box">
+              <div id="dashRPDCount" class="stat-value">2</div>
+              <div class="stat-label">Registros RPD</div>
+            </div>
+            <div class="stat-box">
+              <div id="dashAvgMood" class="stat-value">3.2</div>
+              <div class="stat-label">Humor Médio</div>
+            </div>
+            <div class="stat-box">
+              <div id="dashAnxietyAvg" class="stat-value">42</div>
+              <div class="stat-label">Ansiedade Média</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="section-subtitle flex justify-between items-center">
+            <span>📝 Diário de Humor Rápido</span>
+          </h3>
+          <div class="mb-3">
+            <label class="label">Humor Atual: <span id="quickMoodLabel" style="color: var(--primary); font-weight: 700;">5</span></label>
+            <input type="range" id="quickMood" min="0" max="10" value="5" class="slider">
+            <div class="flex justify-between text-xs mt-1" style="color: var(--text-muted);">
+              <span>Péssimo</span><span>Ótimo</span>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label class="label">Ansiedade: <span id="quickAnxietyLabel" style="color: var(--accent); font-weight: 700;">5</span></label>
+            <input type="range" id="quickAnxiety" min="0" max="10" value="5" class="slider">
+            <div class="flex justify-between text-xs mt-1" style="color: var(--text-muted);">
+              <span>Calmo</span><span>Pânico</span>
+            </div>
+          </div>
+          <button id="saveQuickMood" class="btn btn-primary w-full">Registrar Agora</button>
+        </div>
+
+        <div class="card">
+          <h3 class="section-subtitle">📅 Humor Semanal</h3>
+          <div id="weeklyMoodGrid"></div>
+          <p class="text-xs mt-3" style="color: var(--text-muted);">Clique para ciclar: 😢 😟 😐 🙂 😄</p>
+        </div>
+
+        <div class="card col-span-2">
+          <h3 class="section-subtitle">📈 Últimos Registros</h3>
+          <div id="recentRecords"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- RPD - REGISTRO DE PENSAMENTOS DISFUNCIONAIS -->
+    <div id="module-rpd" class="module">
+      <div class="grid grid-2">
+        <div class="card col-span-2">
+          <div class="flex justify-between items-center mb-5 flex-wrap gap-3">
+            <h2 class="section-title">📝 Registro de Pensamentos Disfuncionais (RPD)</h2>
+            <button id="clearRPD" class="btn btn-secondary btn-sm no-print">Limpar Tudo</button>
+          </div>
+          
+          <form id="rpdForm">
+            <div class="grid grid-2 mb-4">
+              <div>
+                <label class="label">A. Evento Ativador (Situação)</label>
+                <textarea id="rpdSituacao" rows="3" placeholder="O que aconteceu? Onde? Quando? Com quem?"></textarea>
+              </div>
+              <div>
+                <label class="label">B. Pensamentos Automáticos</label>
+                <textarea id="rpdPensamento" rows="3" placeholder="Que pensamentos passaram pela sua cabeça?"></textarea>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="label">
+                C. Consequências: Emoção - <span id="rpdEmocaoLabel" style="color: var(--primary); font-weight: 700;">0%</span>
+              </label>
+              <input type="range" id="rpdEmocao" min="0" max="100" value="0" class="slider">
+              <div class="flex justify-between text-xs mt-1" style="color: var(--text-muted);">
+                <span>0%</span><span>50%</span><span>100%</span>
+              </div>
+            </div>
+
+            <div class="grid grid-2 mb-4">
+              <div>
+                <label class="label">D. Evidências que Apoiam</label>
+                <textarea id="rpdEvidenciaFavor" rows="4" placeholder="Que fatos sustentam este pensamento?"></textarea>
+              </div>
+              <div>
+                <label class="label">E. Evidências Contrárias</label>
+                <textarea id="rpdEvidenciaContra" rows="4" placeholder="Que fatos contrariam? Evidências de distorção?"></textarea>
+              </div>
+            </div>
+
+            <div class="mb-4">
+              <label class="label">F. Pensamento Alternativo/Balanceado</label>
+              <textarea id="rpdPensamentoAlt" rows="3" placeholder="Qual outra forma de ver a situação? Mais realista e útil?"></textarea>
+            </div>
+
+            <div class="mb-4">
+              <label class="label">
+                G. Resultado: Nova Emoção - <span id="rpdNovaEmocaoLabel" style="color: var(--accent); font-weight: 700;">0%</span>
+              </label>
+              <input type="range" id="rpdNovaEmocao" min="0" max="100" value="0" class="slider">
+            </div>
+
+            <button type="submit" class="btn btn-primary w-full">Salvar Registro RPD</button>
+          </form>
+        </div>
+
+        <div class="card col-span-2">
+          <h3 class="section-subtitle">Histórico de RPDs</h3>
+          <div id="rpdHistory"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ESCALAS -->
+    <div id="module-escalas" class="module">
+      <div class="grid grid-2">
+        <div class="card">
+          <h2 class="section-title">😔 Inventário Beck de Depressão (BDI-II)</h2>
+          <p class="text-sm mb-4" style="color: var(--text-muted);">21 itens - Autoavaliação dos últimos 7 dias</p>
+          <div id="bdiItems"></div>
+          <div class="mt-4 p-4" style="background: var(--bg-secondary); border-radius: 0.75rem;">
+            <div class="flex justify-between items-center">
+              <span class="font-semibold">Pontuação Total:</span>
+              <span id="bdiTotal" class="text-3xl font-bold" style="color: var(--primary);">0</span>
+            </div>
+            <p id="bdiInterpretacao" class="text-sm mt-2" style="color: var(--text-muted);">Mínima (0-13)</p>
+          </div>
+          <button id="saveBDI" class="btn btn-primary w-full mt-4">Salvar Resultado</button>
+        </div>
+
+        <div class="card">
+          <h2 class="section-title">😰 Inventário Beck de Ansiedade (BAI)</h2>
+          <p class="text-sm mb-4" style="color: var(--text-muted);">21 sintomas - Última semana</p>
+          <div id="baiItems"></div>
+          <div class="mt-4 p-4" style="background: var(--bg-secondary); border-radius: 0.75rem;">
+            <div class="flex justify-between items-center">
+              <span class="font-semibold">Pontuação Total:</span>
+              <span id="baiTotal" class="text-3xl font-bold" style="color: var(--accent);">0</span>
+            </div>
+            <p id="baiInterpretacao" class="text-sm mt-2" style="color: var(--text-muted);">Mínima (0-7)</p>
+          </div>
+          <button id="saveBAI" class="btn btn-primary w-full mt-4">Salvar Resultado</button>
+        </div>
+
+        <div class="card col-span-2">
+          <h3 class="section-subtitle">📊 Histórico de Escalas</h3>
+          <div id="escalasHistory"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TÉCNICAS -->
+    <div id="module-tecnicas" class="module">
+      <div class="grid grid-2">
+        <div class="card col-span-2">
+          <div class="flex justify-between items-center mb-5 flex-wrap gap-3">
+            <h2 class="section-title">🧠 Biblioteca de Técnicas TCC</h2>
+            <div class="flex gap-2 no-print">
+              <input type="text" id="searchTechniques" placeholder="🔍 Buscar técnica..." style="min-width: 200px;">
+              <select id="filterCategory" style="min-width: 150px;">
+                <option value="">Todas Categorias</option>
+              </select>
+            </div>
+          </div>
+          <div id="techniquesList" class="grid grid-2"></div>
+        </div>
+
+        <div class="card col-span-2">
+          <h3 class="section-subtitle">⏱️ Controle de Sessão Terapêutica</h3>
+          <div class="text-center mb-6">
+            <div id="timer" class="text-5xl font-bold mb-4" style="font-variant-numeric: tabular-nums;">00:00:00</div>
+            <div class="flex gap-2 justify-center flex-wrap">
+              <button id="startTimer" class="btn btn-primary">Iniciar</button>
+              <button id="pauseTimer" class="btn btn-secondary">Pausar</button>
+              <button id="resetTimer" class="btn btn-secondary">Zerar</button>
+            </div>
+          </div>
+
+          <div class="mb-4">
+            <h4 class="font-semibold text-sm mb-3">Checklist da Agenda</h4>
+            <label class="flex items-center gap-3 p-2 rounded-lg cursor-pointer mb-2" style="background: var(--bg-secondary);">
+              <input type="checkbox" id="check1" style="width: 20px; height: 20px;">
+              <span class="text-sm">Revisão da tarefa de casa</span>
+            </label>
+            <label class="flex items-center gap-3 p-2 rounded-lg cursor-pointer mb-2" style="background: var(--bg-secondary);">
+              <input type="checkbox" id="check2" style="width: 20px; height: 20px;">
+              <span class="text-sm">Tema principal trabalhado</span>
+            </label>
+            <label class="flex items-center gap-3 p-2 rounded-lg cursor-pointer mb-2" style="background: var(--bg-secondary);">
+              <input type="checkbox" id="check3" style="width: 20px; height: 20px;">
+              <span class="text-sm">Definir nova tarefa de casa</span>
+            </label>
+          </div>
+
+          <div>
+            <label class="label">Notas Rápidas da Sessão</label>
+            <textarea id="sessionNotes" rows="4" placeholder="Anotações importantes..."></textarea>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TOC -->
+    <div id="module-toc" class="module">
+      <div class="grid grid-2">
+        <div class="card col-span-2">
+          <h2 class="section-title">🔍 Escala Y-BOCS Simplificada</h2>
+          <div class="grid grid-2">
+            <div>
+              <h4 class="font-semibold mb-3" style="color: var(--primary);">Obsessões</h4>
+              <div class="mb-3">
+                <label class="label">1. Tempo gasto com obsessões</label>
+                <select id="ybocs-obs-tempo">
+                  <option value="0">0 - Nenhum</option>
+                  <option value="1">1 - Leve (&lt;1h/dia)</option>
+                  <option value="2">2 - Moderado (1-3h/dia)</option>
+                  <option value="3">3 - Grave (3-8h/dia)</option>
+                  <option value="4">4 - Extremo (&gt;8h/dia)</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="label">2. Interferência na vida</label>
+                <select id="ybocs-obs-interf">
+                  <option value="0">0 - Nenhuma</option>
+                  <option value="1">1 - Leve</option>
+                  <option value="2">2 - Moderada</option>
+                  <option value="3">3 - Grave</option>
+                  <option value="4">4 - Incapacitante</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="label">3. Sofrimento causado</label>
+                <select id="ybocs-obs-sofr">
+                  <option value="0">0 - Nenhum</option>
+                  <option value="1">1 - Leve</option>
+                  <option value="2">2 - Moderado</option>
+                  <option value="3">3 - Grave</option>
+                  <option value="4">4 - Extremo</option>
+                </select>
+              </div>
+            </div>
+
+            <div>
+              <h4 class="font-semibold mb-3" style="color: var(--accent);">Compulsões</h4>
+              <div class="mb-3">
+                <label class="label">1. Tempo gasto com compulsões</label>
+                <select id="ybocs-comp-tempo">
+                  <option value="0">0 - Nenhum</option>
+                  <option value="1">1 - Leve (&lt;1h/dia)</option>
+                  <option value="2">2 - Moderado (1-3h/dia)</option>
+                  <option value="3">3 - Grave (3-8h/dia)</option>
+                  <option value="4">4 - Extremo (&gt;8h/dia)</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="label">2. Interferência na vida</label>
+                <select id="ybocs-comp-interf">
+                  <option value="0">0 - Nenhuma</option>
+                  <option value="1">1 - Leve</option>
+                  <option value="2">2 - Moderada</option>
+                  <option value="3">3 - Grave</option>
+                  <option value="4">4 - Incapacitante</option>
+                </select>
+              </div>
+              <div class="mb-3">
+                <label class="label">3. Resistência às compulsões</label>
+                <select id="ybocs-comp-resist">
+                  <option value="0">0 - Sempre resiste</option>
+                  <option value="1">1 - Resiste na maioria</option>
+                  <option value="2">2 - Resiste algumas vezes</option>
+                  <option value="3">3 - Cede quase sempre</option>
+                  <option value="4">4 - Cede completamente</option>
+                </select>
+              </div>
+            </div>
+          </div>
+
+          <div class="mt-4 p-4" style="background: var(--bg-secondary); border-radius: 0.75rem;">
+            <div class="flex justify-between items-center">
+              <span class="font-semibold">Pontuação Total Y-BOCS:</span>
+              <span id="ybocsTotal" class="text-3xl font-bold" style="color: var(--primary);">0</span>
+            </div>
+            <p class="text-sm mt-2" style="color: var(--text-muted);">
+              0-7 Subclínico | 8-15 Leve | 16-23 Moderado | 24-31 Grave | 32-40 Extremo
+            </p>
+          </div>
+          <button id="saveYbocs" class="btn btn-primary w-full mt-4">Salvar Resultado Y-BOCS</button>
+        </div>
+
+        <div class="card">
+          <h3 class="section-subtitle">📈 Hierarquia de Exposição ERP</h3>
+          <form id="erpHierarchyForm" class="mb-4">
+            <input type="text" id="erpItemText" placeholder="Situação temida..." class="mb-2">
+            <div class="flex gap-2">
+              <input type="number" id="erpItemSuds" placeholder="SUDS 0-100" min="0" max="100" style="flex: 1;">
+              <button type="submit" class="btn btn-primary btn-sm">Adicionar</button>
+            </div>
+          </form>
+          <div id="tocHierarquiaList"></div>
+        </div>
+
+        <div class="card">
+          <h3 class="section-subtitle">🎯 Registro ERP</h3>
+          <form id="erpForm">
+            <div class="mb-3">
+              <label class="label">Obsessão/Gatilho</label>
+              <textarea id="erpObsessao" rows="2" placeholder="Ex: Tocar na maçaneta da porta"></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="label">
+                Ansiedade Inicial: <span id="erpAnsiedadeLabel" style="color: var(--primary); font-weight: 700;">0</span>
+              </label>
+              <input type="range" id="erpAnsiedade" min="0" max="100" value="0" class="slider">
+            </div>
+            <div class="mb-3">
+              <label class="label">Compulsão Evitada?</label>
+              <select id="erpCompulsao">
+                <option value="sim">Sim - Evitei completamente</option>
+                <option value="parcial">Parcial - Fiz menos que o normal</option>
+                <option value="nao">Não - Fiz a compulsão</option>
+              </select>
+            </div>
+            <div class="mb-3">
+              <label class="label">Duração até ansiedade cair 50%</label>
+              <input type="text" id="erpDuracao" placeholder="Ex: 25 minutos">
+            </div>
+            <button type="submit" class="btn btn-primary w-full">Registrar ERP</button>
+          </form>
+        </div>
+
+        <div class="card col-span-2">
+          <h3 class="section-subtitle">Histórico ERP</h3>
+          <div id="erpHistory"></div>
+        </div>
+
+        <div class="card col-span-2">
+          <h3 class="section-subtitle">Histórico Y-BOCS</h3>
+          <div id="ybocsHistory"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOBIA SOCIAL -->
+    <div id="module-fobia" class="module">
+      <div class="grid grid-2">
+        <div class="card col-span-2">
+          <h2 class="section-title">😰 Escala LSAS - Ansiedade Social</h2>
+          <div class="overflow-x-auto">
+            <table class="table">
+              <thead>
+                <tr>
+                  <th>Situação Social</th>
+                  <th>Medo (0-3)</th>
+                  <th>Evitação (0-3)</th>
+                </tr>
+              </thead>
+              <tbody id="lsasTable"></tbody>
+            </table>
+          </div>
+          <div class="mt-4 p-4 grid grid-3" style="background: var(--bg-secondary); border-radius: 0.75rem;">
+            <div>
+              <div class="text-xs" style="color: var(--text-muted);">Medo Total</div>
+              <div id="lsasMedoTotal" class="text-2xl font-bold" style="color: var(--primary);">0</div>
+            </div>
+            <div>
+              <div class="text-xs" style="color: var(--text-muted);">Evitação Total</div>
+              <div id="lsasEvitacaoTotal" class="text-2xl font-bold" style="color: var(--accent);">0</div>
+            </div>
+            <div>
+              <div class="text-xs" style="color: var(--text-muted);">Total Geral</div>
+              <div id="lsasTotalGeral" class="text-2xl font-bold">0</div>
+            </div>
+          </div>
+          <button id="saveLSAS" class="btn btn-primary w-full mt-4">Salvar Resultado LSAS</button>
+        </div>
+
+        <div class="card">
+          <h3 class="section-subtitle">📊 Hierarquia Social</h3>
+          <form id="socialHierarchyForm" class="mb-4">
+            <input type="text" id="socialItemText" placeholder="Situação social..." class="mb-2">
+            <div class="flex gap-2">
+              <input type="number" id="socialItemSuds" placeholder="SUDS 0-100" min="0" max="100" style="flex: 1;">
+              <button type="submit" class="btn btn-primary btn-sm">Adicionar</button>
+            </div>
+          </form>
+          <div id="socialHierarquiaList"></div>
+        </div>
+
+        <div class="card">
+          <h3 class="section-subtitle">🧪 Experimentos Comportamentais</h3>
+          <form id="experimentoForm">
+            <div class="mb-3">
+              <label class="label">Hipótese (Previsão)</label>
+              <textarea id="expHipotese" rows="2" placeholder="Ex: Se eu falar em público, vou gaguejar e todos vão rir"></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="label">Experimento Planejado</label>
+              <textarea id="expExperimento" rows="2" placeholder="Ex: Fazer uma pergunta na reunião"></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="label">Resultado</label>
+              <textarea id="expResultado" rows="2" placeholder="O que realmente aconteceu?"></textarea>
+            </div>
+            <div class="mb-3">
+              <label class="label">Conclusão/Aprendizado</label>
+              <textarea id="expConclusao" rows="2" placeholder="Minha previsão foi pior que a realidade"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary w-full">Salvar Experimento</button>
+          </form>
+        </div>
+
+        <div class="card col-span-2">
+          <h3 class="section-subtitle">🎭 Registro de Exposição Social</h3>
+          <form id="expSocialForm">
+            <div class="mb-3">
+              <label class="label">Situação</label>
+              <textarea id="esSitaucao" rows="2" placeholder="Ex: Apresentar em reunião de trabalho"></textarea>
+            </div>
+            <div class="grid grid-2 mb-3">
+              <div>
+                <label class="label">Pensamentos Automáticos</label>
+                <textarea id="esPensamentos" rows="3" placeholder="Ex: Vão achar que sou incompetente"></textarea>
+              </div>
+              <div>
+                <label class="label">Sintomas Físicos</label>
+                <textarea id="esSintomas" rows="3" placeholder="Ex: Tremor, suor, coração acelerado"></textarea>
+              </div>
+            </div>
+            <div class="mb-3">
+              <label class="label">Comportamentos de Segurança</label>
+              <textarea id="esSeguranca" rows="2" placeholder="Ex: Evitei contato visual, falei baixo"></textarea>
+            </div>
+            <div class="grid grid-2 mb-3">
+              <div>
+                <label class="label">Resultado Esperado</label>
+                <textarea id="esEsperado" rows="2" placeholder="Ex: Vão perceber que sou um fracasso"></textarea>
+              </div>
+              <div>
+                <label class="label">Resultado Real</label>
+                <textarea id="esReal" rows="2" placeholder="Ex: Apresentei bem, recebi 1 pergunta"></textarea>
+              </div>
+            </div>
+            <button type="submit" class="btn btn-primary w-full">Registrar Exposição</button>
+          </form>
+        </div>
+
+        <div class="card col-span-2">
+          <h3 class="section-subtitle">Histórico de Experimentos</h3>
+          <div id="experimentosHistory"></div>
+        </div>
+
+        <div class="card col-span-2">
+          <h3 class="section-subtitle">Histórico LSAS</h3>
+          <div id="lsasHistory"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PSICOEDUCAÇÃO -->
+    <div id="module-psicoeducacao" class="module">
+      <div class="grid grid-2">
+        <div class="card col-span-2">
+          <h2 class="section-title">💡 Modelo Cognitivo de Beck</h2>
+          <p class="mb-4">O modelo cognitivo propõe que nossos pensamentos, emoções e comportamentos estão interconectados. A forma como interpretamos eventos (cognições) influencia como nos sentimos e agimos.</p>
+          <div class="grid grid-3">
+            <div class="p-4 text-center" style="background: var(--bg-secondary); border-radius: 0.75rem;">
+              <div class="text-3xl mb-2">💭</div>
+              <div class="font-bold mb-1">Pensamentos</div>
+              <p class="text-sm" style="color: var(--text-muted);">Interpretações e crenças sobre eventos</p>
+            </div>
+            <div class="p-4 text-center" style="background: var(--bg-secondary); border-radius: 0.75rem;">
+              <div class="text-3xl mb-2">❤️</div>
+              <div class="font-bold mb-1">Emoções</div>
+              <p class="text-sm" style="color: var(--text-muted);">Sentimentos gerados pelos pensamentos</p>
+            </div>
+            <div class="p-4 text-center" style="background: var(--bg-secondary); border-radius: 0.75rem;">
+              <div class="text-3xl mb-2">🏃</div>
+              <div class="font-bold mb-1">Comportamentos</div>
+              <p class="text-sm" style="color: var(--text-muted);">Ações resultantes de emoções</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card col-span-2">
+          <h3 class="section-subtitle">🧩 Distorções Cognitivas Comuns</h3>
+          <div class="grid grid-2" id="distortionsList"></div>
+        </div>
+
+        <div class="card">
+          <h3 class="section-subtitle">🎯 Técnicas de Questionamento Socrático</h3>
+          <div class="space-y-3">
+            <div class="p-3" style="background: var(--bg-secondary); border-radius: 0.5rem;">
+              <div class="font-semibold mb-1">Que evidências tenho?</div>
+              <p class="text-sm" style="color: var(--text-muted);">Busca fatos concretos que apoiam ou contrariam o pensamento</p>
+            </div>
+            <div class="p-3" style="background: var(--bg-secondary); border-radius: 0.5rem;">
+              <div class="font-semibold mb-1">Existe outra forma de ver isso?</div>
+              <p class="text-sm" style="color: var(--text-muted);">Explora perspectivas alternativas e mais balanceadas</p>
+            </div>
+            <div class="p-3" style="background: var(--bg-secondary); border-radius: 0.5rem;">
+              <div class="font-semibold mb-1">E se fosse um amigo?</div>
+              <p class="text-sm" style="color: var(--text-muted);">Aplica o mesmo pensamento a alguém querido</p>
+            </div>
+            <div class="p-3" style="background: var(--bg-secondary); border-radius: 0.5rem;">
+              <div class="font-semibold mb-1">Qual o pior cenário realista?</div>
+              <p class="text-sm" style="color: var(--text-muted);">Descatastrofiza e avalia probabilidade real</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 class="section-subtitle">🛡️ Prevenção de Recaídas</h3>
+          <div class="space-y-3">
+            <div class="p-3" style="background: var(--bg-secondary); border-radius: 0.5rem;">
+              <div class="font-semibold mb-1">1. Identifique Sinais de Alerta</div>
+              <p class="text-sm" style="color: var(--text-muted);">Mudanças no sono, apetite, humor, isolamento</p>
+            </div>
+            <div class="p-3" style="background: var(--bg-secondary); border-radius: 0.5rem;">
+              <div class="font-semibold mb-1">2. Tenha um Plano de Ação</div>
+              <p class="text-sm" style="color: var(--text-muted);">Lista de técnicas TCC, contatos de apoio, atividades</p>
+            </div>
+            <div class="p-3" style="background: var(--bg-secondary); border-radius: 0.5rem;">
+              <div class="font-semibold mb-1">3. Mantenha Hábitos Saudáveis</div>
+              <p class="text-sm" style="color: var(--text-muted);">Exercício, sono regular, alimentação, socialização</p>
+            </div>
+            <div class="p-3" style="background: var(--bg-secondary); border-radius: 0.5rem;">
+              <div class="font-semibold mb-1">4. Continue Praticando</div>
+              <p class="text-sm" style="color: var(--text-muted);">RPD semanal, mindfulness, técnicas aprendidas</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="card col-span-2">
+          <h3 class="section-subtitle">📚 Glossário TCC</h3>
+          <div id="glossaryList"></div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <footer class="mt-6 py-6 text-center text-sm" style="color: var(--text-muted); border-top: 1px solid var(--border);">
+    <p class="font-semibold">TCC Pro © 2025</p>
+    <p class="mt-1 text-xs">Baseado em: 101 Técnicas da TCC - Jaquelini Conceição et al.</p>
+    <p class="mt-1 text-xs">Uso clínico supervisionado. Dados salvos localmente no seu navegador.</p>
+  </footer>
+</div>
+
+<div id="toastContainer"></div>
+
+<script>
+(function() {
+  'use strict';
+  
+  // ========== STORAGE ==========
+  const storage = {
+    get: (key, defaultVal = null) => {
+      try {
+        const item = localStorage.getItem('tccpro_' + key);
+        return item ? JSON.parse(item) : defaultVal;
+      } catch { return defaultVal; }
+    },
+    set: (key, val) => {
+      try { localStorage.setItem('tccpro_' + key, JSON.stringify(val)); return true; } catch { return false; }
+    },
+    export: () => {
+      const data = {};
+      for (let i = 0; i < localStorage.length; i++) {
+        const key = localStorage.key(i);
+        if (key.startsWith('tccpro_')) {
+          data[key] = localStorage.getItem(key);
+        }
+      }
+      return JSON.stringify(data, null, 2);
+    }
+  };
+
+  // ========== THEME ==========
+  let isDark = storage.get('theme', false);
+  function updateTheme() {
+    document.documentElement.classList.toggle('dark', isDark);
+    document.getElementById('themeToggle').textContent = isDark ? '☀️' : '🌙';
+  }
+  updateTheme();
+  document.getElementById('themeToggle').addEventListener('click', () => {
+    isDark = !isDark;
+    storage.set('theme', isDark);
+    updateTheme();
+  });
+
+  // ========== NAVIGATION ==========
+  const navTabs = document.querySelectorAll('.nav-tab');
+  const modules = document.querySelectorAll('.module');
+  const hamburger = document.getElementById('hamburger');
+  const nav = document.getElementById('mainNav');
+
+  hamburger.addEventListener('click', () => nav.classList.toggle('open'));
+
+  navTabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const module = tab.dataset.module;
+      navTabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      modules.forEach(m => m.classList.remove('active'));
+      document.getElementById(`module-${module}`).classList.add('active');
+      nav.classList.remove('open');
+      window.scrollTo(0, 0);
+    });
+  });
+
+  // ========== TOAST ==========
+  function showToast(msg, type = 'success') {
+    const toast = document.createElement('div');
+    toast.className = 'toast card';
+    toast.style.borderLeft = `4px solid var(--${type === 'error' ? 'danger' : type === 'warning' ? 'warning' : 'accent'})`;
+    toast.textContent = msg;
+    document.getElementById('toastContainer').appendChild(toast);
+    setTimeout(() => toast.remove(), 3000);
+  }
+
+  // ========== PRINT & EXPORT ==========
+  document.getElementById('printBtn').addEventListener('click', () => window.print());
+  document.getElementById('exportBtn').addEventListener('click', () => {
+    const data = storage.export();
+    const blob = new Blob([data], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `tccpro_backup_${new Date().toISOString().split('T')[0]}.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    showToast('Dados exportados com sucesso!');
+  });
+
+  // ========== DASHBOARD ==========
+  const quickMood = document.getElementById('quickMood');
+  const quickAnxiety = document.getElementById('quickAnxiety');
+  quickMood.value = storage.get('quickMood', 5);
+  quickAnxiety.value = storage.get('quickAnxiety', 5);
+  
+  quickMood.addEventListener('input', e => {
+    document.getElementById('quickMoodLabel').textContent = e.target.value;
+    storage.set('quickMood', e.target.value);
+  });
+  
+  quickAnxiety.addEventListener('input', e => {
+    document.getElementById('quickAnxietyLabel').textContent = e.target.value;
+    storage.set('quickAnxiety', e.target.value);
+  });
+  
+  document.getElementById('quickMoodLabel').textContent = quickMood.value;
+  document.getElementById('quickAnxietyLabel').textContent = quickAnxiety.value;
+
+  document.getElementById('saveQuickMood').addEventListener('click', () => {
+    const history = storage.get('moodHistory', []);
+    history.push({
+      date: new Date().toLocaleString('pt-BR'),
+      mood: quickMood.value,
+      anxiety: quickAnxiety.value
+    });
+    storage.set('moodHistory', history.slice(-30));
+    updateDashboard();
+    renderWeeklyMood();
+    showToast('Humor registrado!');
+  });
+
+  // Weekly Mood Grid
+  let weeklyMoods = storage.get('weeklyMoods', {
+    'Manhã-0': 2, 'Tarde-0': 3, 'Noite-0': 3,
+    'Manhã-1': 3, 'Tarde-1': 4, 'Noite-1': 3,
+    'Manhã-2': 2, 'Tarde-2': 2, 'Noite-2': 4,
+    'Manhã-3': 3, 'Tarde-3': 3, 'Noite-3': 2,
+    'Manhã-4': 4, 'Tarde-4': 3, 'Noite-4': 3,
+    'Manhã-5': 4, 'Tarde-5': 4, 'Noite-5': 4,
+    'Manhã-6': 3, 'Tarde-6': 3, 'Noite-6': 3
+  });
+
+  const moodEmojis = ['😢', '😟', '😐', '🙂', '😄'];
+  
+  function renderWeeklyMood() {
+    const periods = ['Manhã', 'Tarde', 'Noite'];
+    const days = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+    const container = document.getElementById('weeklyMoodGrid');
+    
+    let html = '<div style="display: grid; grid-template-columns: 60px repeat(7, 1fr); gap: 0.5rem; font-size: 0.75rem;">';
+    html += '<div></div>';
+    days.forEach(d => html += `<div class="text-center font-semibold" style="color: var(--text-muted);">${d}</div>`);
+    
+    periods.forEach(period => {
+      html += `<div class="flex items-center font-medium" style="color: var(--text-muted);">${period}</div>`;
+      for (let day = 0; day < 7; day++) {
+        const key = `${period}-${day}`;
+        const val = weeklyMoods[key] || 2;
+        html += `<div class="mood-cell" onclick="cycleMood('${key}')">${moodEmojis[val]}</div>`;
+      }
+    });
+    html += '</div>';
+    container.innerHTML = html;
+  }
+  
+  window.cycleMood = (key) => {
+    weeklyMoods[key] = ((weeklyMoods[key] || 2) + 1) % moodEmojis.length;
+    storage.set('weeklyMoods', weeklyMoods);
+    renderWeeklyMood();
+  };
+  
+  renderWeeklyMood();
+
+  function updateDashboard() {
+    const rpdHistory = storage.get('rpdHistory', []);
+    const moodHistory = storage.get('moodHistory', []);
+    
+    document.getElementById('dashRPDCount').textContent = rpdHistory.length;
+    
+    if (moodHistory.length > 0) {
+      const recent = moodHistory.slice(-7);
+      const avgMood = (recent.reduce((sum, r) => sum + parseInt(r.mood), 0) / recent.length).toFixed(1);
+      const avgAnxiety = Math.round(recent.reduce((sum, r) => sum + parseInt(r.anxiety), 0) / recent.length * 10);
+      document.getElementById('dashAvgMood').textContent = avgMood;
+      document.getElementById('dashAnxietyAvg').textContent = avgAnxiety;
+    }
+    
+    const allRecords = [
+      ...rpdHistory.slice(-2).map(r => ({ type: 'RPD', date: r.date, info: r.situacao })),
+      ...moodHistory.slice(-2).map(r => ({ type: 'Humor', date: r.date, info: `Mood: ${r.mood}/10, Ansiedade: ${r.anxiety}/10` }))
+    ].sort((a, b) => {
+      const dateA = new Date(a.date.split(',')[0].split('/').reverse().join('-'));
+      const dateB = new Date(b.date.split(',')[0].split('/').reverse().join('-'));
+      return dateB - dateA;
+    });
+    
+    const recentDiv = document.getElementById('recentRecords');
+    if (allRecords.length === 0) {
+      recentDiv.innerHTML = '<p class="text-sm" style="color: var(--text-muted);">Nenhum registro ainda.</p>';
+    } else {
+      recentDiv.innerHTML = allRecords.slice(0, 5).map(r => `
+        <div class="record-item">
+          <div class="flex justify-between items-start mb-1">
+            <span class="badge badge-primary">${r.type}</span>
+            <span class="text-xs" style="color: var(--text-muted);">${r.date}</span>
+          </div>
+          <p class="text-sm">${r.info}</p>
+        </div>
+      `).join('');
+    }
+  }
+  updateDashboard();
+
+  // ========== RPD ==========
+  let rpdHistory = storage.get('rpdHistory', [
+    {
+      date: '15/10/2025, 14:30',
+      situacao: 'Chefe me pediu para refazer relatório na frente de todos',
+      pensamento: 'Ele acha que eu sou incompetente. Vou ser demitido. Nunca faço nada certo.',
+      emocao: 85,
+      evidenciaFavor: 'Ele realmente pediu para refazer. Estava com cara séria.',
+      evidenciaContra: 'Já elogiu meu trabalho antes. Todos cometem erros. Pedir revisão é normal. Não mencionou demissão.',
+      pensamentoAlt: 'Ele quer o melhor resultado e está me dando chance de melhorar. É um feedback, não um ataque pessoal. Posso aprender com isso.',
+      novaEmocao: 30
+    },
+    {
+      date: '12/10/2025, 09:15',
+      situacao: 'Amiga não respondeu minha mensagem há 2 dias',
+      pensamento: 'Ela está brava comigo. Fiz algo errado. Ninguém gosta de mim.',
+      emocao: 75,
+      evidenciaFavor: 'Ela visualizou e não respondeu. Normalmente responde rápido.',
+      evidenciaContra: 'Ela está com projeto grande no trabalho. Já aconteceu antes e depois explicou que estava ocupada. Não fiz nada ofensivo.',
+      pensamentoAlt: 'Ela provavelmente está ocupada com trabalho. Não significa que está brava. Posso perguntar se está tudo bem sem assumir.',
+      novaEmocao: 25
+    }
+  ]);
+
+  const rpdForm = document.getElementById('rpdForm');
+  const rpdEmocao = document.getElementById('rpdEmocao');
+  const rpdNovaEmocao = document.getElementById('rpdNovaEmocao');
+  
+  rpdEmocao.addEventListener('input', e => {
+    document.getElementById('rpdEmocaoLabel').textContent = e.target.value + '%';
+  });
+  
+  rpdNovaEmocao.addEventListener('input', e => {
+    document.getElementById('rpdNovaEmocaoLabel').textContent = e.target.value + '%';
+  });
+
+  function renderRPD() {
+    const container = document.getElementById('rpdHistory');
+    if (rpdHistory.length === 0) {
+      container.innerHTML = '<p class="text-sm" style="color: var(--text-muted);">Nenhum RPD registrado.</p>';
+      return;
+    }
+    container.innerHTML = rpdHistory.slice().reverse().map((r, idx) => `
+      <div class="record-item">
+        <div class="flex justify-between items-start mb-2">
+          <span class="text-xs" style="color: var(--text-muted);">${r.date}</span>
+          <button onclick="deleteRPD(${rpdHistory.length - 1 - idx})" class="btn btn-danger btn-sm no-print">🗑️</button>
+        </div>
+        <div class="text-sm space-y-1">
+          <p><strong>A. Situação:</strong> ${r.situacao}</p>
+          <p><strong>B. Pensamento:</strong> ${r.pensamento}</p>
+          <p><strong>C. Emoção:</strong> ${r.emocao}% → <strong>G. Nova:</strong> ${r.novaEmocao}%</p>
+          <p><strong>F. Alternativo:</strong> ${r.pensamentoAlt}</p>
+        </div>
+      </div>
+    `).join('');
+  }
+  
+  window.deleteRPD = (idx) => {
+    rpdHistory.splice(idx, 1);
+    storage.set('rpdHistory', rpdHistory);
+    renderRPD();
+    updateDashboard();
+    showToast('RPD removido');
+  };
+
+  rpdForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+    rpdHistory.push({
+      date: new Date().toLocaleString('pt-BR'),
+      situacao: document.getElementById('rpdSituacao').value,
+      pensamento: document.getElementById('rpdPensamento').value,
+      emocao: rpdEmocao.value,
+      evidenciaFavor: document.getElementById('rpdEvidenciaFavor').value,
+      evidenciaContra: document.getElementById('rpdEvidenciaContra').value,
+      pensamentoAlt: document.getElementById('rpdPensamentoAlt').value,
+      novaEmocao: rpdNovaEmocao.value
+    });
+    storage.set('rpdHistory', rpdHistory);
+    rpdForm.reset();
+    rpdEmocao.value = 0;
+    rpdNovaEmocao.value = 0;
+    document.getElementById('rpdEmocaoLabel').textContent = '0%';
+    document.getElementById('rpdNovaEmocaoLabel').textContent = '0%';
+    renderRPD();
+    updateDashboard();
+    showToast('RPD salvo com sucesso!');
+  });
+
+  document.getElementById('clearRPD').addEventListener('click', () => {
+    if (confirm('Limpar todo o histórico de RPD?')) {
+      rpdHistory = [];
+      storage.set('rpdHistory', []);
+      renderRPD();
+      updateDashboard();
+      showToast('Histórico limpo');
+    }
+  });
+
+  renderRPD();
+
+  // ========== ESCALAS BDI-II E BAI ==========
+  const bdiQuestions = [
+    'Tristeza', 'Pessimismo', 'Fracasso passado', 'Perda de prazer', 'Sentimentos de culpa',
+    'Sentimentos de punição', 'Autoaversão', 'Autocrítica', 'Pensamentos suicidas', 'Choro',
+    'Agitação', 'Perda de interesse', 'Indecisão', 'Desvalorização', 'Perda de energia',
+    'Alterações no sono', 'Irritabilidade', 'Alterações de apetite', 'Dificuldade de concentração',
+    'Cansaço ou fadiga', 'Perda de interesse por sexo'
+  ];
+
+  const baiSymptoms = [
+    'Dormência ou formigamento', 'Sensação de calor', 'Tremores nas pernas', 'Incapaz de relaxar',
+    'Medo de acontecer o pior', 'Atordoado/tonto', 'Palpitação', 'Sem equilíbrio', 'Aterrorizado',
+    'Nervoso', 'Sensação de sufocamento', 'Tremores nas mãos', 'Trêmulo', 'Medo de perder controle',
+    'Dificuldade de respirar', 'Medo de morrer', 'Assustado', 'Indigestão', 'Desmaio', 'Rubor facial', 'Suor'
+  ];
+
+  let bdiScores = storage.get('bdiScores', Array(21).fill(0));
+  let baiScores = storage.get('baiScores', Array(21).fill(0));
+
+  function renderBDI() {
+    const container = document.getElementById('bdiItems');
+    container.innerHTML = bdiQuestions.map((q, i) => `
+      <div class="mb-3">
+        <label class="label">${i + 1}. ${q}</label>
+        <div class="flex gap-2">
+          ${[0,1,2,3].map(v => `
+            <label class="flex items-center gap-1 cursor-pointer">
+              <input type="radio" name="bdi-${i}" value="${v}" ${bdiScores[i] === v ? 'checked' : ''} 
+                onchange="updateBDI(${i}, ${v})" style="width: 20px; height: 20px;">
+              <span class="text-sm">${v}</span>
+            </label>
+          `).join('')}
+        </div>
+      </div>
+    `).join('');
+    updateBDITotal();
+  }
+
+  window.updateBDI = (idx, val) => {
+    bdiScores[idx] = parseInt(val);
+    storage.set('bdiScores', bdiScores);
+    updateBDITotal();
+  };
+
+  function updateBDITotal() {
+    const total = bdiScores.reduce((sum, s) => sum + s, 0);
+    document.getElementById('bdiTotal').textContent = total;
+    let interp = 'Mínima (0-13)';
+    if (total >= 29) interp = 'Grave (29-63)';
+    else if (total >= 20) interp = 'Moderada (20-28)';
+    else if (total >= 14) interp = 'Leve (14-19)';
+    document.getElementById('bdiInterpretacao').textContent = interp;
+  }
+
+  function renderBAI() {
+    const container = document.getElementById('baiItems');
+    container.innerHTML = baiSymptoms.map((s, i) => `
+      <div class="mb-3">
+        <label class="label">${i + 1}. ${s}</label>
+        <div class="flex gap-2">
+          ${[0,1,2,3].map(v => `
+            <label class="flex items-center gap-1 cursor-pointer">
+              <input type="radio" name="bai-${i}" value="${v}" ${baiScores[i] === v ? 'checked' : ''} 
+                onchange="updateBAI(${i}, ${v})" style="width: 20px; height: 20px;">
+              <span class="text-sm">${v}</span>
+            </label>
+          `).join('')}
+        </div>
+      </div>
+    `).join('');
+    updateBAITotal();
+  }
+
+  window.updateBAI = (idx, val) => {
+    baiScores[idx] = parseInt(val);
+    storage.set('baiScores', baiScores);
+    updateBAITotal();
+  };
+
+  function updateBAITotal() {
+    const total = baiScores.reduce((sum, s) => sum + s, 0);
+    document.getElementById('baiTotal').textContent = total;
+    let interp = 'Mínima (0-7)';
+    if (total >= 26) interp = 'Grave (26-63)';
+    else if (total >= 16) interp = 'Moderada (16-25)';
+    else if (total >= 8) interp = 'Leve (8-15)';
+    document.getElementById('baiInterpretacao').textContent = interp;
+  }
+
+  renderBDI();
+  renderBAI();
+
+  if (!storage.get('escalasExampleLoaded', false)) {
+    storage.set('escalasExampleLoaded', true);
+  }
+
+  let escalasHistory = storage.get('escalasHistory', [
+    { type: 'BDI-II', date: '10/10/2025, 10:00', total: 18 },
+    { type: 'BAI', date: '10/10/2025, 10:00', total: 12 }
+  ]);
+
+  document.getElementById('saveBDI').addEventListener('click', () => {
+    escalasHistory.push({
+      type: 'BDI-II',
+      date: new Date().toLocaleString('pt-BR'),
+      total: bdiScores.reduce((sum, s) => sum + s, 0)
+    });
+    storage.set('escalasHistory', escalasHistory);
+    renderEscalasHistory();
+    showToast('BDI-II salvo!');
+  });
+
+  document.getElementById('saveBAI').addEventListener('click', () => {
+    escalasHistory.push({
+      type: 'BAI',
+      date: new Date().toLocaleString('pt-BR'),
+      total: baiScores.reduce((sum, s) => sum + s, 0)
+    });
+    storage.set('escalasHistory', escalasHistory);
+    renderEscalasHistory();
+    showToast('BAI salvo!');
+  });
+
+  function renderEscalasHistory() {
+    const container = document.getElementById('escalasHistory');
+    container.innerHTML = escalasHistory.slice(-10).reverse().map(h => `
+      <div class="record-item">
+        <div class="flex justify-between items-center">
+          <span class="badge badge-primary">${h.type}</span>
+          <span class="text-xs" style="color: var(--text-muted);">${h.date}</span>
+        </div>
+        <div class="mt-2 font-bold text-lg">${h.total} pontos</div>
+      </div>
+    `).join('');
+  }
+  renderEscalasHistory();
+
+  // ========== TÉCNICAS - 20 DO PDF ==========
+  const techniquesData = [
+    {
+      id: 1,
+      nome: 'Exposição ao Vivo',
+      categoria: 'Ansiedade',
+      objetivo: 'Reduzir ansiedade através de exposição gradual a estímulos temidos reais',
+      indicacao: 'Fobias específicas, ansiedade social, TOC',
+      comoAplicar: '1. Criar hierarquia SUDS 0-100. 2. Começar pelo nível 30-40. 3. Permanecer até ansiedade cair 50%. 4. Repetir até habituar. 5. Progredir gradualmente.',
+      resultado: 'Habituação e redução do medo por extinção da resposta condicionada'
+    },
+    {
+      id: 2,
+      nome: 'Exposição em Imaginação',
+      categoria: 'TEPT',
+      objetivo: 'Processar memórias traumáticas através de recontagem detalhada',
+      indicacao: 'TEPT, fobias, ansiedade generalizada',
+      comoAplicar: 'Paciente reconta evento traumático em detalhes no presente, 30-45min. Repetir sessões. Gravar para tarefa de casa.',
+      resultado: 'Extinção da resposta de medo e processamento emocional'
+    },
+    {
+      id: 3,
+      nome: 'Dessensibilização Sistemática',
+      categoria: 'Fobias',
+      objetivo: 'Eliminar fobias através de contracondicionamento',
+      indicacao: 'Fobias específicas, medos irracionais',
+      comoAplicar: '1. Treinar relaxamento. 2. Hierarquia de estímulos. 3. Expor imaginariamente + relaxamento. 4. Progredir quando SUDS < 30.',
+      resultado: 'Substituição da resposta de medo por relaxamento'
+    },
+    {
+      id: 4,
+      nome: 'Parada do Pensamento',
+      categoria: 'TOC',
+      objetivo: 'Interromper pensamentos obsessivos ou ruminativos',
+      indicacao: 'TOC, ruminação depressiva, preocupação excessiva',
+      comoAplicar: 'Ao notar pensamento intrusivo: 1. Gritar "PARE!" mentalmente. 2. Estalar elástico no pulso. 3. Redirecionar atenção para estímulo externo.',
+      resultado: 'Quebra do ciclo obsessivo-compulsivo'
+    },
+    {
+      id: 5,
+      nome: 'Relaxamento de Jacobson',
+      categoria: 'Ansiedade',
+      objetivo: 'Reduzir tensão muscular e ansiedade fisiológica',
+      indicacao: 'Ansiedade generalizada, tensão crônica, insônia',
+      comoAplicar: 'Contrair cada grupo muscular 5-7s, relaxar 15-20s. Sequência: pés→pernas→abdômen→tórax→braços→pescoço→face. 15-20min diários.',
+      resultado: 'Reconhecimento e controle da tensão corporal'
+    },
+    {
+      id: 6,
+      nome: 'Respiração Diafragmática',
+      categoria: 'Pânico',
+      objetivo: 'Regular sistema nervoso autônomo e prevenir hiperventilação',
+      indicacao: 'Ataques de pânico, ansiedade, estresse',
+      comoAplicar: '1. Mão no peito e abdômen. 2. Inspirar pelo nariz 4s expandindo abdômen. 3. Segurar 2s. 4. Expirar pela boca 6s. 10 ciclos.',
+      resultado: 'Ativação parassimpática, redução de sintomas físicos'
+    },
+    {
+      id: 7,
+      nome: 'Inoculação de Estresse',
+      categoria: 'Estresse',
+      objetivo: 'Desenvolver habilidades de enfrentamento para situações estressoras',
+      indicacao: 'Estresse ocupacional, preparação para eventos',
+      comoAplicar: '3 fases: 1. Educação sobre estresse. 2. Ensaio de habilidades (respiração, reestruturação). 3. Aplicação em simulações graduais.',
+      resultado: 'Aumento da autoeficácia e resiliência'
+    },
+    {
+      id: 8,
+      nome: 'Técnica da Torta',
+      categoria: 'TOC',
+      objetivo: 'Redistribuir responsabilidade excessiva de forma realista',
+      indicacao: 'TOC com culpa, responsabilidade inflada',
+      comoAplicar: 'Desenhar pizza. Listar TODOS os fatores que contribuíram para evento. Dividir em fatias percentuais. Qual % é realmente sua?',
+      resultado: 'Redução de culpa e fusão pensamento-ação'
+    },
+    {
+      id: 9,
+      nome: 'Questionamento Socrático',
+      categoria: 'Cognitiva',
+      objetivo: 'Descobrir e modificar crenças disfuncionais através de perguntas',
+      indicacao: 'Todas as distorções cognitivas',
+      comoAplicar: 'Perguntas: Que evidências tenho? Existe outra explicação? Se fosse amigo, que diria? Qual pior cenário realista? E se acontecer?',
+      resultado: 'Flexibilidade cognitiva e pensamento balanceado'
+    },
+    {
+      id: 10,
+      nome: 'Seta Descendente',
+      categoria: 'Crenças Centrais',
+      objetivo: 'Identificar crenças centrais subjacentes a pensamentos automáticos',
+      indicacao: 'Identificação de esquemas disfuncionais',
+      comoAplicar: 'Pensamento: "Vou falhar". Se for verdade, o que significa? "Sou incompetente". E se for verdade? "Não sou amável". Repetir até crença nuclear.',
+      resultado: 'Acesso a esquemas profundos para reestruturação'
+    },
+    {
+      id: 11,
+      nome: 'Reestruturação Cognitiva',
+      categoria: 'Depressão',
+      objetivo: 'Modificar pensamentos automáticos disfuncionais',
+      indicacao: 'Depressão, ansiedade, distorções cognitivas',
+      comoAplicar: 'RPD: A.Situação B.Pensamento C.Emoção D.Evidências pró/contra E.Alternativo F.Nova emoção. Praticar diariamente.',
+      resultado: 'Pensamentos mais realistas e humor melhorado'
+    },
+    {
+      id: 12,
+      nome: 'Experimentos Comportamentais',
+      categoria: 'Fobia Social',
+      objetivo: 'Testar validade de crenças disfuncionais na prática',
+      indicacao: 'Fobia social, ansiedade, crenças testáveis',
+      comoAplicar: '1. Definir crença: "Se falar, vão rir". 2. Planejar experimento: fazer pergunta na reunião. 3. Prever resultado. 4. Executar. 5. Comparar previsão vs realidade.',
+      resultado: 'Desconfirmação empírica de crenças distorcidas'
+    },
+    {
+      id: 13,
+      nome: 'Ativação Comportamental',
+      categoria: 'Depressão',
+      objetivo: 'Aumentar contato com reforçadores positivos através de ação',
+      indicacao: 'Depressão, inatividade, anedonia',
+      comoAplicar: '1. Monitorar atividades e humor 0-10. 2. Listar atividades prazerosas/mestria. 3. Agendar 1-2/dia mesmo sem vontade. 4. Avaliar humor pós.',
+      resultado: 'Quebra ciclo depressão-inatividade, mais reforço positivo'
+    },
+    {
+      id: 14,
+      nome: 'Treino de Habilidades Sociais',
+      categoria: 'Fobia Social',
+      objetivo: 'Desenvolver repertório comportamental para interações sociais',
+      indicacao: 'Fobia social, déficit de habilidades',
+      comoAplicar: '1. Modelação pelo terapeuta. 2. Role-play com feedback. 3. Ensaio comportamental. 4. Tarefa de casa em situação real. 5. Revisão.',
+      resultado: 'Aumento de competência e confiança social'
+    },
+    {
+      id: 15,
+      nome: 'Prevenção de Resposta',
+      categoria: 'TOC',
+      objetivo: 'Impedir compulsões após exposição a obsessões',
+      indicacao: 'TOC - componente compulsivo',
+      comoAplicar: 'Expor ao gatilho (ex: tocar maçaneta) e IMPEDIR compulsão (lavar mãos). Ansiedade sobe, depois cai naturalmente. Repetir diariamente.',
+      resultado: 'Extinção da compulsão e habituação à ansiedade'
+    },
+    {
+      id: 16,
+      nome: 'Registro de Pensamentos Disfuncionais',
+      categoria: 'Transdiagnóstico',
+      objetivo: 'Ferramenta estruturada para reestruturação cognitiva',
+      indicacao: 'Todos transtornos com componente cognitivo',
+      comoAplicar: '7 colunas: Situação | Pensamento | Emoção% | Evidências Pró/Contra | Alternativo | Nova emoção%. Preencher quando notar mudança humor.',
+      resultado: 'Consciência metacognitiva e alternativas de pensamento'
+    },
+    {
+      id: 17,
+      nome: 'Ensaio Cognitivo',
+      categoria: 'Ansiedade',
+      objetivo: 'Preparar mentalmente para situações temidas',
+      indicacao: 'Ansiedade antecipatória, fobias',
+      comoAplicar: 'Visualizar situação temida em detalhes, incluindo: enfrentamento bem-sucedido, uso de habilidades, resultado positivo. 10min diários.',
+      resultado: 'Redução de ansiedade antecipatória e aumento de autoeficácia'
+    },
+    {
+      id: 18,
+      nome: 'Distração',
+      categoria: 'Crise',
+      objetivo: 'Tolerar emoções intensas sem comportamentos disfuncionais',
+      indicacao: 'Crises de angústia, ideação suicida, fissura',
+      comoAplicar: 'ACEITA: Atividades, Contribuir, Emoções opostas, Imaginar, Pensamentos, Sensações. Focar atenção em estímulo alternativo por 20min.',
+      resultado: 'Sobrevivência à crise sem atos impulsivos'
+    },
+    {
+      id: 19,
+      nome: 'Mindfulness',
+      categoria: 'Aceitação',
+      objetivo: 'Observar pensamentos/emoções sem julgamento ou luta',
+      indicacao: 'Depressão, ansiedade, dor crônica, prevenção recaída',
+      comoAplicar: '3min/dia: Sentar, focar respiração. Quando mente divagar, notar sem julgar e retornar à respiração. Pensamentos são nuvens passando.',
+      resultado: 'Desfusão cognitiva e redução de reatividade'
+    },
+    {
+      id: 20,
+      nome: 'Solução de Problemas',
+      categoria: 'Depressão',
+      objetivo: 'Abordar problemas práticos de forma estruturada',
+      indicacao: 'Depressão, ansiedade generalizada, estresse',
+      comoAplicar: '6 passos: 1.Definir problema 2.Brainstorm soluções 3.Avaliar prós/contras 4.Escolher melhor 5.Planejar execução 6.Avaliar resultado.',
+      resultado: 'Aumento de senso de controle e eficácia'
+    }
+  ];
+
+  let filteredTechniques = [...techniquesData];
+  let favorites = storage.get('techniquesFavorites', []);
+
+  function renderTechniques() {
+    const container = document.getElementById('techniquesList');
+    const searchTerm = document.getElementById('searchTechniques').value.toLowerCase();
+    const categoryFilter = document.getElementById('filterCategory').value;
+    
+    filteredTechniques = techniquesData.filter(t => {
+      const matchSearch = !searchTerm || 
+        t.nome.toLowerCase().includes(searchTerm) || 
+        t.objetivo.toLowerCase().includes(searchTerm) ||
+        t.indicacao.toLowerCase().includes(searchTerm);
+      const matchCategory = !categoryFilter || t.categoria === categoryFilter;
+      return matchSearch && matchCategory;
+    });
+
+    if (filteredTechniques.length === 0) {
+      container.innerHTML = '<p class="text-center text-sm col-span-2" style="color: var(--text-muted);">Nenhuma técnica encontrada.</p>';
+      return;
+    }
+
+    container.innerHTML = filteredTechniques.map(t => `
+      <div class="card technique-card">
+        <div class="flex justify-between items-start mb-2">
+          <div>
+            <h3 class="font-bold text-lg mb-1">${t.nome}</h3>
+            <span class="badge badge-primary">${t.categoria}</span>
+          </div>
+          <button onclick="toggleFavorite(${t.id})" class="btn btn-secondary btn-sm no-print" title="Favoritar">
+            ${favorites.includes(t.id) ? '⭐' : '☆'}
+          </button>
+        </div>
+        <div class="text-sm space-y-2">
+          <p><strong>Objetivo:</strong> ${t.objetivo}</p>
+          <p><strong>Indicação:</strong> ${t.indicacao}</p>
+          <details class="mt-2">
+            <summary class="cursor-pointer font-semibold" style="color: var(--primary);">Como Aplicar ▼</summary>
+            <p class="mt-2 text-sm" style="color: var(--text-muted);">${t.comoAplicar}</p>
+          </details>
+          <p class="mt-2 p-2 text-xs" style="background: var(--bg-secondary); border-radius: 0.5rem;">
+            <strong>Resultado:</strong> ${t.resultado}
+          </p>
+        </div>
+      </div>
+    `).join('');
+
+    // Atualizar filtro de categorias
+    const categories = [...new Set(techniquesData.map(t => t.categoria))].sort();
+    const filterSelect = document.getElementById('filterCategory');
+    if (filterSelect.options.length === 1) {
+      categories.forEach(cat => {
+        const opt = document.createElement('option');
+        opt.value = cat;
+        opt.textContent = cat;
+        filterSelect.appendChild(opt);
+      });
+    }
+  }
+
+  window.toggleFavorite = (id) => {
+    const idx = favorites.indexOf(id);
+    if (idx > -1) favorites.splice(idx, 1);
+    else favorites.push(id);
+    storage.set('techniquesFavorites', favorites);
+    renderTechniques();
+    showToast(favorites.includes(id) ? 'Adicionado aos favoritos' : 'Removido dos favoritos');
+  };
+
+  document.getElementById('searchTechniques').addEventListener('input', renderTechniques);
+  document.getElementById('filterCategory').addEventListener('change', renderTechniques);
+
+  renderTechniques();
+
+  // ========== TIMER ==========
+  let timerInterval = null;
+  let seconds = 0;
+  
+  function updateTimerDisplay() {
+    const h = String(Math.floor(seconds / 3600)).padStart(2, '0');
+    const m = String(Math.floor((seconds % 3600) / 60)).padStart(2, '0');
+    const s = String(seconds % 60).padStart(2, '0');
+    document.getElementById('timer').textContent = `${h}:${m}:${s}`;
+  }
+
+  document.getElementById('startTimer').addEventListener('click', () => {
+    if (!timerInterval) {
+      timerInterval = setInterval(() => {
+        seconds++;
+        updateTimerDisplay();
+      }, 1000);
+    }
+  });
+
+  document.getElementById('pauseTimer').addEventListener('click', () => {
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+  });
+
+  document.getElementById('resetTimer').addEventListener('click', () => {
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+    seconds = 0;
+    updateTimerDisplay();
+  });
+
+  // ========== TOC/Y-BOCS ==========
+  function updateYbocs() {
+    const obs = ['obs-tempo', 'obs-interf', 'obs-sofr'].reduce((sum, id) => 
+      sum + parseInt(document.getElementById('ybocs-' + id).value), 0);
+    const comp = ['comp-tempo', 'comp-interf', 'comp-resist'].reduce((sum, id) => 
+      sum + parseInt(document.getElementById('ybocs-' + id).value), 0);
+    document.getElementById('ybocsTotal').textContent = obs + comp;
+  }
+
+  ['obs-tempo', 'obs-interf', 'obs-sofr', 'comp-tempo', 'comp-interf', 'comp-resist'].forEach(id => {
+    document.getElementById('ybocs-' + id).addEventListener('change', updateYbocs);
+  });
+
+  let ybocsHistory = storage.get('ybocsHistory', []);
+  
+  document.getElementById('saveYbocs').addEventListener('click', () => {
+    const total = parseInt(document.getElementById('ybocsTotal').textContent);
+    ybocsHistory.push({
+      date: new Date().toLocaleString('pt-BR'),
+      total: total
+    });
+    storage.set('ybocsHistory', ybocsHistory);
+    renderYbocsHistory();
+    showToast('Y-BOCS salvo!');
+  });
+
+  function renderYbocsHistory() {
+    const container = document.getElementById('ybocsHistory');
+    if (ybocsHistory.length === 0) {
+      container.innerHTML = '<p class="text-sm" style="color: var(--text-muted);">Nenhum registro.</p>';
+      return;
+    }
+    container.innerHTML = ybocsHistory.slice(-10).reverse().map(h => `
+      <div class="record-item">
+        <div class="flex justify-between items-center">
+          <span class="text-sm">${h.date}</span>
+          <span class="font-bold text-lg">${h.total}/40</span>
+        </div>
+      </div>
+    `).join('');
+  }
+  renderYbocsHistory();
+
+  // ERP Hierarchy
+  let erpHierarchy = storage.get('erpHierarchy', [
+    { text: 'Tocar maçaneta de banheiro público', suds: 85 },
+    { text: 'Usar transporte público', suds: 65 },
+    { text: 'Cumprimentar com aperto de mão', suds: 45 },
+    { text: 'Tocar em dinheiro', suds: 30 }
+  ]);
+
+  document.getElementById('erpHierarchyForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = document.getElementById('erpItemText').value;
+    const suds = parseInt(document.getElementById('erpItemSuds').value);
+    if (text && suds >= 0 && suds <= 100) {
+      erpHierarchy.push({ text, suds });
+      erpHierarchy.sort((a, b) => b.suds - a.suds);
+      storage.set('erpHierarchy', erpHierarchy);
+      renderERPHierarchy();
+      e.target.reset();
+    }
+  });
+
+  function renderERPHierarchy() {
+    const container = document.getElementById('tocHierarquiaList');
+    container.innerHTML = erpHierarchy.map((item, idx) => `
+      <div class="record-item">
+        <div class="flex justify-between items-center">
+          <span class="text-sm flex-1">${item.text}</span>
+          <div class="flex gap-2 items-center">
+            <span class="badge badge-danger">SUDS: ${item.suds}</span>
+            <button onclick="deleteERPItem(${idx})" class="btn btn-danger btn-sm no-print">×</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  window.deleteERPItem = (idx) => {
+    erpHierarchy.splice(idx, 1);
+    storage.set('erpHierarchy', erpHierarchy);
+    renderERPHierarchy();
+  };
+
+  renderERPHierarchy();
+
+  // ERP Records
+  let erpHistory = storage.get('erpHistory', []);
+  document.getElementById('erpAnsiedade').addEventListener('input', e => {
+    document.getElementById('erpAnsiedadeLabel').textContent = e.target.value;
+  });
+
+  document.getElementById('erpForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    erpHistory.push({
+      date: new Date().toLocaleString('pt-BR'),
+      obsessao: document.getElementById('erpObsessao').value,
+      ansiedade: document.getElementById('erpAnsiedade').value,
+      compulsao: document.getElementById('erpCompulsao').value,
+      duracao: document.getElementById('erpDuracao').value
+    });
+    storage.set('erpHistory', erpHistory);
+    renderERPHistory();
+    e.target.reset();
+    document.getElementById('erpAnsiedade').value = 0;
+    document.getElementById('erpAnsiedadeLabel').textContent = '0';
+    showToast('ERP registrado!');
+  });
+
+  function renderERPHistory() {
+    const container = document.getElementById('erpHistory');
+    if (erpHistory.length === 0) {
+      container.innerHTML = '<p class="text-sm" style="color: var(--text-muted);">Nenhum registro.</p>';
+      return;
+    }
+    container.innerHTML = erpHistory.slice().reverse().map((r, idx) => `
+      <div class="record-item">
+        <div class="flex justify-between items-start mb-2">
+          <span class="text-xs" style="color: var(--text-muted);">${r.date}</span>
+          <button onclick="deleteERP(${erpHistory.length - 1 - idx})" class="btn btn-danger btn-sm no-print">🗑️</button>
+        </div>
+        <div class="text-sm">
+          <p><strong>Obsessão:</strong> ${r.obsessao}</p>
+          <p><strong>Ansiedade:</strong> ${r.ansiedade}/100</p>
+          <p><strong>Compulsão evitada:</strong> ${r.compulsao}</p>
+          <p><strong>Duração:</strong> ${r.duracao}</p>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  window.deleteERP = (idx) => {
+    erpHistory.splice(idx, 1);
+    storage.set('erpHistory', erpHistory);
+    renderERPHistory();
+  };
+
+  renderERPHistory();
+
+  // ========== FOBIA SOCIAL / LSAS ==========
+  const lsasSituations = [
+    'Falar em público', 'Comer em público', 'Beber com outros', 'Trabalhar sob observação',
+    'Escrever sob observação', 'Telefonar em público', 'Festa/reunião social', 'Usar banheiro público'
+  ];
+
+  let lsasScores = storage.get('lsasScores', Array(lsasSituations.length * 2).fill(0));
+
+  function renderLSAS() {
+    const tbody = document.getElementById('lsasTable');
+    tbody.innerHTML = lsasSituations.map((sit, i) => `
+      <tr>
+        <td>${sit}</td>
+        <td>
+          <select onchange="updateLSAS(${i * 2}, this.value)">
+            <option value="0" ${lsasScores[i * 2] === 0 ? 'selected' : ''}>0-Nenhum</option>
+            <option value="1" ${lsasScores[i * 2] === 1 ? 'selected' : ''}>1-Leve</option>
+            <option value="2" ${lsasScores[i * 2] === 2 ? 'selected' : ''}>2-Moderado</option>
+            <option value="3" ${lsasScores[i * 2] === 3 ? 'selected' : ''}>3-Intenso</option>
+          </select>
+        </td>
+        <td>
+          <select onchange="updateLSAS(${i * 2 + 1}, this.value)">
+            <option value="0" ${lsasScores[i * 2 + 1] === 0 ? 'selected' : ''}>0-Nunca</option>
+            <option value="1" ${lsasScores[i * 2 + 1] === 1 ? 'selected' : ''}>1-Ocasional</option>
+            <option value="2" ${lsasScores[i * 2 + 1] === 2 ? 'selected' : ''}>2-Frequente</option>
+            <option value="3" ${lsasScores[i * 2 + 1] === 3 ? 'selected' : ''}>3-Usual</option>
+          </select>
+        </td>
+      </tr>
+    `).join('');
+    updateLSASTotal();
+  }
+
+  window.updateLSAS = (idx, val) => {
+    lsasScores[idx] = parseInt(val);
+    storage.set('lsasScores', lsasScores);
+    updateLSASTotal();
+  };
+
+  function updateLSASTotal() {
+    let medo = 0, evitacao = 0;
+    for (let i = 0; i < lsasScores.length; i += 2) {
+      medo += lsasScores[i];
+      evitacao += lsasScores[i + 1];
+    }
+    document.getElementById('lsasMedoTotal').textContent = medo;
+    document.getElementById('lsasEvitacaoTotal').textContent = evitacao;
+    document.getElementById('lsasTotalGeral').textContent = medo + evitacao;
+  }
+
+  renderLSAS();
+
+  let lsasHistory = storage.get('lsasHistory', []);
+  
+  document.getElementById('saveLSAS').addEventListener('click', () => {
+    const total = parseInt(document.getElementById('lsasTotalGeral').textContent);
+    lsasHistory.push({
+      date: new Date().toLocaleString('pt-BR'),
+      total: total
+    });
+    storage.set('lsasHistory', lsasHistory);
+    renderLSASHistory();
+    showToast('LSAS salvo!');
+  });
+
+  function renderLSASHistory() {
+    const container = document.getElementById('lsasHistory');
+    if (lsasHistory.length === 0) {
+      container.innerHTML = '<p class="text-sm" style="color: var(--text-muted);">Nenhum registro.</p>';
+      return;
+    }
+    container.innerHTML = lsasHistory.slice(-10).reverse().map(h => `
+      <div class="record-item">
+        <div class="flex justify-between items-center">
+          <span class="text-sm">${h.date}</span>
+          <span class="font-bold text-lg">${h.total}/144</span>
+        </div>
+      </div>
+    `).join('');
+  }
+  renderLSASHistory();
+
+  // Social Hierarchy
+  let socialHierarchy = storage.get('socialHierarchy', [
+    { text: 'Iniciar conversa com estranho', suds: 80 },
+    { text: 'Falar em reunião de trabalho', suds: 70 },
+    { text: 'Pedir informação na rua', suds: 50 },
+    { text: 'Cumprimentar vizinho', suds: 30 }
+  ]);
+
+  document.getElementById('socialHierarchyForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const text = document.getElementById('socialItemText').value;
+    const suds = parseInt(document.getElementById('socialItemSuds').value);
+    if (text && suds >= 0 && suds <= 100) {
+      socialHierarchy.push({ text, suds });
+      socialHierarchy.sort((a, b) => b.suds - a.suds);
+      storage.set('socialHierarchy', socialHierarchy);
+      renderSocialHierarchy();
+      e.target.reset();
+    }
+  });
+
+  function renderSocialHierarchy() {
+    const container = document.getElementById('socialHierarquiaList');
+    container.innerHTML = socialHierarchy.map((item, idx) => `
+      <div class="record-item">
+        <div class="flex justify-between items-center">
+          <span class="text-sm flex-1">${item.text}</span>
+          <div class="flex gap-2 items-center">
+            <span class="badge badge-danger">SUDS: ${item.suds}</span>
+            <button onclick="deleteSocialItem(${idx})" class="btn btn-danger btn-sm no-print">×</button>
+          </div>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  window.deleteSocialItem = (idx) => {
+    socialHierarchy.splice(idx, 1);
+    storage.set('socialHierarchy', socialHierarchy);
+    renderSocialHierarchy();
+  };
+
+  renderSocialHierarchy();
+
+  // Experimentos
+  let experimentosHistory = storage.get('experimentosHistory', []);
+  
+  document.getElementById('experimentoForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    experimentosHistory.push({
+      date: new Date().toLocaleString('pt-BR'),
+      hipotese: document.getElementById('expHipotese').value,
+      experimento: document.getElementById('expExperimento').value,
+      resultado: document.getElementById('expResultado').value,
+      conclusao: document.getElementById('expConclusao').value
+    });
+    storage.set('experimentosHistory', experimentosHistory);
+    renderExperimentos();
+    e.target.reset();
+    showToast('Experimento salvo!');
+  });
+
+  function renderExperimentos() {
+    const container = document.getElementById('experimentosHistory');
+    if (experimentosHistory.length === 0) {
+      container.innerHTML = '<p class="text-sm" style="color: var(--text-muted);">Nenhum experimento registrado.</p>';
+      return;
+    }
+    container.innerHTML = experimentosHistory.slice().reverse().map((r, idx) => `
+      <div class="record-item">
+        <div class="flex justify-between items-start mb-2">
+          <span class="text-xs" style="color: var(--text-muted);">${r.date}</span>
+          <button onclick="deleteExperimento(${experimentosHistory.length - 1 - idx})" class="btn btn-danger btn-sm no-print">🗑️</button>
+        </div>
+        <div class="text-sm space-y-1">
+          <p><strong>Hipótese:</strong> ${r.hipotese}</p>
+          <p><strong>Experimento:</strong> ${r.experimento}</p>
+          <p><strong>Resultado:</strong> ${r.resultado}</p>
+          <p><strong>Conclusão:</strong> ${r.conclusao}</p>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  window.deleteExperimento = (idx) => {
+    experimentosHistory.splice(idx, 1);
+    storage.set('experimentosHistory', experimentosHistory);
+    renderExperimentos();
+  };
+
+  renderExperimentos();
+
+  // Exposição Social
+  let expSocialHistory = storage.get('expSocialHistory', []);
+  
+  document.getElementById('expSocialForm').addEventListener('submit', (e) => {
+    e.preventDefault();
+    expSocialHistory.push({
+      date: new Date().toLocaleString('pt-BR'),
+      situacao: document.getElementById('esSitaucao').value,
+      pensamentos: document.getElementById('esPensamentos').value,
+      sintomas: document.getElementById('esSintomas').value,
+      seguranca: document.getElementById('esSeguranca').value,
+      esperado: document.getElementById('esEsperado').value,
+      real: document.getElementById('esReal').value
+    });
+    storage.set('expSocialHistory', expSocialHistory);
+    e.target.reset();
+    showToast('Exposição registrada!');
+  });
+
+  // ========== PSICOEDUCAÇÃO ==========
+  const distortions = [
+    { nome: 'Pensamento Tudo-ou-Nada', desc: 'Ver situações em extremos, sem meio-termo.', exemplo: 'Se não sou perfeito, sou um fracasso total.' },
+    { nome: 'Catastrofização', desc: 'Prever o pior cenário possível.', exemplo: 'Se eu errar, serei demitido e ficarei sem-teto.' },
+    { nome: 'Leitura Mental', desc: 'Assumir que sabe o que outros pensam.', exemplo: 'Ela não me cumprimentou, deve me odiar.' },
+    { nome: 'Adivinhação do Futuro', desc: 'Prever negativamente sem evidências.', exemplo: 'Vou falhar na entrevista com certeza.' },
+    { nome: 'Desqualificação do Positivo', desc: 'Descartar experiências positivas.', exemplo: 'Passei na prova, mas foi sorte.' },
+    { nome: 'Raciocínio Emocional', desc: 'Assumir que sentimentos refletem fatos.', exemplo: 'Sinto-me ansioso, logo algo ruim vai acontecer.' },
+    { nome: 'Rotulação', desc: 'Colocar rótulos globais em si/outros.', exemplo: 'Cometi um erro, sou um idiota.' },
+    { nome: 'Magnificação/Minimização', desc: 'Exagerar negativos, minimizar positivos.', exemplo: 'Meu erro foi terrível, meu acerto foi irrelevante.' },
+    { nome: 'Deveria/Teria que', desc: 'Regras rígidas sobre comportamento.', exemplo: 'Eu deveria sempre agradar a todos.' },
+    { nome: 'Personalização', desc: 'Assumir culpa por eventos externos.', exemplo: 'Meu filho tirou nota baixa, a culpa é minha.' }
+  ];
+
+  document.getElementById('distortionsList').innerHTML = distortions.map(d => `
+    <div class="p-3" style="background: var(--bg-secondary); border-radius: 0.5rem;">
+      <div class="font-semibold mb-1" style="color: var(--primary);">${d.nome}</div>
+      <p class="text-sm mb-1" style="color: var(--text-muted);">${d.desc}</p>
+      <p class="text-xs italic" style="color: var(--text-light);">Ex: "${d.exemplo}"</p>
+    </div>
+  `).join('');
+
+  const glossary = [
+    { termo: 'Crenças Centrais', def: 'Convicções profundas sobre si, outros e mundo. Formadas na infância e muito resistentes à mudança.' },
+    { termo: 'Distorções Cognitivas', def: 'Padrões sistemáticos de pensamento irracional que mantêm emoções negativas.' },
+    { termo: 'Esquemas', def: 'Estruturas cognitivas que organizam e interpretam informações baseadas em experiências passadas.' },
+    { termo: 'Exposição', def: 'Técnica de enfrentar estímulos temidos de forma gradual para reduzir ansiedade por habituação.' },
+    { termo: 'Pensamentos Automáticos', def: 'Pensamentos rápidos, involuntários que surgem em resposta a situações.' },
+    { termo: 'Reestruturação Cognitiva', def: 'Processo de identificar, questionar e modificar pensamentos disfuncionais.' },
+    { termo: 'SUDS', def: 'Subjective Units of Distress Scale - escala 0-100 de ansiedade/desconforto subjetivo.' },
+    { termo: 'Comportamentos de Segurança', def: 'Ações que visam prevenir catástrofes temidas mas mantêm ansiedade a longo prazo.' }
+  ];
+
+  document.getElementById('glossaryList').innerHTML = glossary.map(g => `
+    <div class="accordion mb-2">
+      <div class="accordion-header" onclick="toggleAccordion(this)">
+        <span>${g.termo}</span>
+        <span>▼</span>
+      </div>
+      <div class="accordion-content">
+        <p class="text-sm">${g.def}</p>
+      </div>
+    </div>
+  `).join('');
+
+  window.toggleAccordion = (header) => {
+    const content = header.nextElementSibling;
+    content.classList.toggle('open');
+    header.querySelector('span:last-child').textContent = content.classList.contains('open') ? '▲' : '▼';
+  };
+
+})();
+</script>
+<script>(function(){document.addEventListener("click",function(e){var a=e.target.closest("[data-product-id]");if(!a)return;e.preventDefault();var pid=a.getAttribute("data-product-id");if(pid)parent.postMessage({type:"ecto-artifact-link-click",productId:pid},"*")})})();</script>
+</body>
+</html>
